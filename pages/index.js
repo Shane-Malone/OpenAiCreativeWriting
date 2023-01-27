@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from "./index.module.css";
 
 export default function Home() {
-  const [animalInput, setAnimalInput] = useState("");
+  const [topicInput, setTopicInput] = useState("");
   const [result, setResult] = useState();
 
   async function onSubmit(event) {
@@ -14,7 +14,7 @@ export default function Home() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ animal: animalInput }),
+        body: JSON.stringify({ topic: topicInput }),
       });
 
       const data = await response.json();
@@ -23,7 +23,7 @@ export default function Home() {
       }
 
       setResult(data.result);
-      setAnimalInput("");
+      setTopicInput("");
     } catch(error) {
       // Consider implementing your own error handling logic here
       console.error(error);
@@ -41,6 +41,13 @@ export default function Home() {
         <img src="/quill.png" className={styles.icon} />
         <h3>Cre(AI)tive Writing</h3>
         <form onSubmit={onSubmit}>
+          <input
+            type="text"
+            name="Topic"
+            placeholder="Enter a topic"
+            value={topicInput}
+            onChange={(e) => setTopicInput(e.target.value)} 
+          />
           <input type="submit" value="Generate creative writing prompt" />
         </form>
         <div className={styles.result}>{result}</div>
