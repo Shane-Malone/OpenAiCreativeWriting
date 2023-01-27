@@ -15,11 +15,14 @@ export default async function (req, res) {
     return;
   }
 
+  const topic = req.body.topic || '';
+
   try {
     const completion = await openai.createCompletion({
       model: "text-davinci-003",
-      prompt: generateWritingPrompt(),
+      prompt: generateWritingPrompt(topic),
       temperature: 0.6,
+      max_tokens: 4000,
     });
     res.status(200).json({ result: completion.data.choices[0].text });
   } catch(error) {
@@ -38,6 +41,12 @@ export default async function (req, res) {
   }
 }
 
-function generateWritingPrompt(){
-  return "Give me a creative writing prompt.";
+function generateWritingPrompt(topic){
+  if (topic.length == 0){
+    return "Give me the first paragraph of a short story.";
+  }
+  else {
+    return `Give me the first paragraph of a short story based on the topic: .${topic}`;
+  }
+  
 }

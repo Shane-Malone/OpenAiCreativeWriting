@@ -44,7 +44,7 @@ export default function Home() {
           <input
             type="text"
             name="Topic"
-            placeholder="Enter a topic"
+            placeholder="Enter a topic (optional)"
             value={topicInput}
             onChange={(e) => setTopicInput(e.target.value)} 
           />
